@@ -3,4 +3,16 @@
   <h1><%= topic.title  %></h1>
 </div>
   <%= topic.body  %> 
+  
+  <form method="post" action="/topics/<%= topic.id %>">
+    <textarea name="body" class="form-control"></textarea>
+    <br>
+    <button type="submit" class="btn btn-success">Comentar</button>
+  </form>
+  <br>
+  
+  <%= topic.comment.each do |comment|  %> 
+  <p><%= comment.body %> </p>
+  <% end %>
+  
 </div>

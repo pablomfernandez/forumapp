@@ -3,6 +3,7 @@ require "cuba/render"
 require "ohm"
 
 require_relative "models/topic"
+require_relative "models/comment"
 
 Cuba.plugin(Cuba::Render)
 Cuba.use Rack::Session::Cookie, secret: "foobar"
@@ -13,6 +14,12 @@ Cuba.define do
 
   on get, "topic/:id" do |id|
     res.write(view("topic", topic: Topic[id]))
+  end
+  
+  on post, "topic/:id" do |id|
+    topic = Topic[id]
+    Comment.create(body: req.POST["body"], topic: topic)
+    res.redirect("/topics/#{topic.id}")
   end
   
   on get, "preguntar" do
