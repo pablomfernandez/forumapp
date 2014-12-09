@@ -12,13 +12,17 @@ Ohm.redis = Redic.new("redis://127.0.0.1:6379")
 Cuba.define do
   @page = {}
 
-  on get, "topic/:id" do |id|
+  on get, "topics/:id" do |id|
     res.write(view("topic", topic: Topic[id]))
   end
   
-  on post, "topic/:id" do |id|
+  on post, "topics/:id" do |id|
     topic = Topic[id]
-    Comment.create(body: req.POST["body"], topic: topic)
+    Comment.create(
+      body: req.POST["body"], 
+      topic: topic
+      )
+    
     res.redirect("/topics/#{topic.id}")
   end
   
